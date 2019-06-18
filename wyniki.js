@@ -7,7 +7,7 @@ const config = require("./config");
   // Get the "viewport" of the page, as reported by the page.
 
   //login
-  await page.goto("http://pomarancza.stronazen.pl/wp-admin/", { waitUntil: "load", timeout: 0 });
+  await page.goto(config.loginPage, { waitUntil: "load", timeout: 0 });
   await page.waitForSelector("#user_login");
   await page.click("#user_login");
   await page.waitFor("#user_login");
@@ -79,7 +79,7 @@ const config = require("./config");
 
   async function createPost(data) {
     //open post
-    await page.goto("http://pomarancza.stronazen.pl/wp-admin/", { waitUntil: "load", timeout: 0 });
+    await page.goto(config.loginPage, { waitUntil: "load", timeout: 0 });
     await page.waitForSelector("#menu-posts a");
     await page.click("#menu-posts a");
     await page.waitForSelector(".page-title-action");

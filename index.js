@@ -11,7 +11,7 @@ const config = require("./config");
   // Get the "viewport" of the page, as reported by the page.
 
   //login
-  await page.goto("http://pomarancza.stronazen.pl/wp-admin/", { waitUntil: "load", timeout: 0 });
+  await page.goto(config.loginPage, { waitUntil: "load", timeout: 0 });
   await page.waitForSelector("#user_login");
   await page.click("#user_login");
   await page.waitFor("#user_login");
@@ -20,7 +20,7 @@ const config = require("./config");
   await page.$eval("#user_pass", (el, password) => (el.value = password), config.password);
   await page.click("#wp-submit");
 
-  for (let pageNumber = 51; pageNumber < 80; pageNumber++) {
+  for (let pageNumber = 1; pageNumber < 80; pageNumber++) {
     let nextPage = `https://www.concordiaubezpieczenia.pl/concordia/o-firmie/aktualnosci,210.html?pg=${pageNumber}&`;
 
     const pageData = await page.evaluate(async () => {
@@ -101,14 +101,14 @@ const config = require("./config");
 
   async function createPost(data) {
     //open post
-    await page.goto("http://pomarancza.stronazen.pl/wp-admin/", { waitUntil: "load", timeout: 0 });
+    await page.goto(config.loginPage, { waitUntil: "load", timeout: 0 });
     await page.waitForSelector("#menu-posts a");
     await page.click("#menu-posts a");
     await page.waitForSelector(".page-title-action");
     await page.click(".page-title-action");
 
     //hide tutorial
-    if (data.title == "Nowe realia uprawowe to nowe możliwości dla rolników") {
+    if (data.title == "Concordia w półfinale plebiscytu na firmę przyjazną dla rolnika") {
       await page.waitForSelector(".components-popover__content .components-button");
       await page.click(".components-popover__content .components-button");
       await page.waitFor(100);
@@ -120,7 +120,7 @@ const config = require("./config");
     }
 
     //add category
-    if (data.title == "Nowe realia uprawowe to nowe możliwości dla rolników") {
+    if (data.title == "Concordia w półfinale plebiscytu na firmę przyjazną dla rolnika") {
       await page.evaluate(async () => {
         document.querySelectorAll(".components-panel__body-toggle")[1].click();
       });
@@ -159,7 +159,7 @@ const config = require("./config");
     await page.click(".edit-post-sidebar-header button");
 
     //add thumbnail
-    if (data.title == "Nowe realia uprawowe to nowe możliwości dla rolników") {
+    if (data.title == "Concordia w półfinale plebiscytu na firmę przyjazną dla rolnika") {
       await page.evaluate(async () => {
         const el = document.querySelectorAll(".components-panel__body-toggle")[3];
         el.click();
